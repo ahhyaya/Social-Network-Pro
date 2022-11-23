@@ -7,9 +7,9 @@ const cwd = process.cwd();
 const PORT = process.env.PORT || 3001;
 const app = express;
 
-app.request(express.urlencoded({ extended: true }));
-app.request(express.json());
-app.request(routes);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(routes);
 
 db.once('open', () => {
     app.listen(PORT, () => {
