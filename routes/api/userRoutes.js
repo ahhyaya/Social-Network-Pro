@@ -26,5 +26,5 @@ router.route('/:userId').get(getSingleUser).delete(deleteUser).put(updateUser);
 // add a new friend to users friend list/ remove a friend from users friend list by ID
 router.route('/:userId/friends/:friendId').post(addNewFriend).delete(removeSingleFriend);
 
-
+module.exports = router;
 
