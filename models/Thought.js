@@ -1,5 +1,11 @@
-const { Schema, model } = require('mongoose');
-const { reactionSchema } = require('./Reaction');
+const { Schema, model, default: mongoose } = require('mongoose');
+// const { reactionSchema } = require('./Reaction');
+
+const reactionSchema = new mongoose.Schema({
+    reactionBody:  { type: String, required: true, maxlenght: 280 },
+    username: { type: String, required: true },
+    createAt: { type: Date, default: Date.now }
+});
 
 const thoughtSchema = new Schema (
     {
@@ -21,9 +27,17 @@ const thoughtSchema = new Schema (
         reactions: [reactionSchema],
     },
     {
-        //TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+    toJSON: {
+        virtuals: true,
+    },
+    id: false,
     }
 );
+
+   //TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+thoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+})
 
 const Thought = model('thought', thoughtSchema);
 module.exports = Thought;
