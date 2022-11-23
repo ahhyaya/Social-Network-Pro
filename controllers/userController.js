@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongoose').Types;
+// const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
 
@@ -49,7 +49,7 @@ module.exports = {
         .then((user) => 
             !user
                 ? res.status(404).json({ message: `No user with this ID!`})
-                : User.findOneAndUpdate(
+                : Thought.findOneAndUpdate(
                     { users: req.params.userId },
                     { $pull: { users: req.params.userId }},
                     { new: true }
