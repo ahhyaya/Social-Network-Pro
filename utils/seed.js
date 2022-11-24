@@ -1,43 +1,42 @@
-const connection = require('../config/connection');
-const { User, Thought } = require('../models');
-const { getRandomName, getRandomReaction } = require('./data');
+const connection = require("../config/connection");
+const { User, Thought } = require("../models");
+const { getRandomName, getRandomReaction } = require("./data");
 
-connection.on('error', (err) => err);
+connection.on("error", (err) => err);
 
-connection.once('open', async () => {
-    console.log('connected');
+connection.once("open", async () => {
+  console.log("connected");
 
-    await User.deleteMany({});
+  await User.deleteMany({});
 
-    await Thought.deleteMany({});
+  await Thought.deleteMany({});
 
-    const users = [];
+  const users = [];
 
-    for (let i = 0; i < 20; i++) {
-        const reactions = getRandomReaction(20);
+  for (let i = 0; i < 20; i++) {
+    const reactions = getRandomReaction(20);
 
-        const name = getRandomName();
+    const name = getRandomName();
 
-        const emailPrefix = name.split(' ').join('').toLocaleLowerCase();
+    const emailPrefix = name.split(" ").join("").toLocaleLowerCase();
 
-        const email = `${emailPrefix}@gmail.com`;
+    const email = `${emailPrefix}@gmail.com`;
 
-
-        users.push({
-            name,
-            email,
-            reactions,
-        })
-    }
-
-    await User.collection.insertMany(users);
-
-    await Thought.collection.insertOne({
-        thoughtText:'This is my thought',
-        users: [...users],
+    users.push({
+      name,
+      email,
+      reactions,
     });
+  }
 
-    console.table(users)
-    console.info('Seeding complete! 🌱');
-    process.exit(0);
-})
+  await User.collection.insertMany(users);
+
+  await Thought.collection.insertOne({
+    thoughtText: "This is my thought",
+    users: [...users],
+  });
+
+  console.table(users);
+  console.info("Seeding complete! 🌱");
+  process.exit(0);
+});

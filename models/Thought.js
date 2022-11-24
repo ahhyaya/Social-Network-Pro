@@ -1,43 +1,43 @@
-const { Schema, model, default: mongoose } = require('mongoose');
+const { Schema, model, default: mongoose } = require("mongoose");
 // const { reactionSchema } = require('./Reaction');
 
 const reactionSchema = new mongoose.Schema({
-    reactionBody:  { type: String, required: true, maxlenght: 280 },
-    username: { type: String, required: true },
-    createAt: { type: Date, default: Date.now }
+  reactionBody: { type: String, required: true, maxlenght: 280 },
+  username: { type: String, required: true },
+  createAt: { type: Date, default: Date.now },
 });
 
-const thoughtSchema = new Schema (
-    {
-        thoughtText: {
-            type: String,
-            required: true,
-            maxlength: 280,
-            minlength: 1,
-        },
-        createAt: {
-            type: Date,
-            default: Date.now,
-            //TODO: Use a getter method to format the timestamp on query
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        reactions: [reactionSchema],
+const thoughtSchema = new Schema(
+  {
+    thoughtText: {
+      type: String,
+      required: true,
+      maxlength: 280,
+      minlength: 1,
     },
-    {
+    createAt: {
+      type: Date,
+      default: Date.now,
+      //TODO: Use a getter method to format the timestamp on query
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    reactions: [reactionSchema],
+  },
+  {
     toJSON: {
-        virtuals: true,
+      virtuals: true,
     },
     id: false,
-    }
+  }
 );
 
-   //TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
-thoughtSchema.virtual('reactionCount').get(function() {
-    return this.reactions.length;
-})
+//TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+thoughtSchema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
 
-const Thought = model('thought', thoughtSchema);
+const Thought = model("thought", thoughtSchema);
 module.exports = Thought;
