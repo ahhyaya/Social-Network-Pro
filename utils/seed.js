@@ -11,15 +11,21 @@ connection.once('open', async () => {
 
     await Thought.deleteMany({});
 
-    const User = [];
+    const users = [];
 
     for (let i = 0; i < 20; i++) {
         const reactions = getRandomReaction(20);
 
         const name = getRandomName();
 
+        const emailPrefix = name.split(' ').join('').toLocaleLowerCase();
+
+        const email = `${emailPrefix}@gmail.com`;
+
+
         users.push({
             name,
+            email,
             reactions,
         })
     }

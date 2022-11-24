@@ -115,10 +115,14 @@ const appReactions = [
     'Thank you for this!',
 ]
 
+
+
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const getRandomName = () => `${getRandomArrItem(firstName)} ${getRandomArrItem(lastName)}`;
 
 const getRandomReaction = () => `${getRandomArrItem(appReactions)}`;
 
-mudule.exports = { getRandomName, getRandomReaction };
+// const getRandomEmail = () => `${getRandomArrItem(firstName)}@gmail.com`;
+
+module.exports = { getRandomName, getRandomReaction };
