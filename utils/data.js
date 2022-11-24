@@ -122,6 +122,4 @@ const getRandomName = () =>
 
 const getRandomReaction = () => `${getRandomArrItem(appReactions)}`;
 
-// const getRandomEmail = () => `${getRandomArrItem(firstName)}@gmail.com`;
-
 module.exports = { getRandomName, getRandomReaction };
