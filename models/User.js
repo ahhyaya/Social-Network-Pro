@@ -1,7 +1,8 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
+require('mongoose-type-email');
 
-import { isEmail } from 'validator';
+// import { isEmail } from 'validator';
 
 const userSchema = new Schema(
   {
@@ -12,13 +13,13 @@ const userSchema = new Schema(
       trimmed: true,
     },
     email: {
-      type: String,
+      type: mongoose.SchemaType.Email,
       trim: true,
       required: true,
       unique: true,
       lowercase: true,
       //TODO: Must match a valid email address (look into Mongoose's matching validation)
-      validate: { validator: isEmail, message: `Invalid email.`},
+      // validate: { validator: isEmail, message: `Invalid email.`},
     },
     thoughts: [
       {
