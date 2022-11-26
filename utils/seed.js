@@ -6,15 +6,15 @@ connection.on("error", (err) => err);
 
 connection.once("open", async () => {
   console.log("connected");
+  
+  await Thought.deleteMany({});
 
   await User.deleteMany({});
-
-  await Thought.deleteMany({});
 
   const users = [];
 
   for (let i = 0; i < 20; i++) {
-    const reactions = getRandomReaction(20);
+    const reactions = getRandomReaction(5);
 
     const name = getRandomName();
 
