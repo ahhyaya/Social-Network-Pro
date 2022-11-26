@@ -1,8 +1,13 @@
 const { Schema, model, default: mongoose } = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
-require('mongoose-type-email');
+// require('mongoose-type-email');
 
 // import { isEmail } from 'validator';
+
+const validateEmail = function(email) {
+  const regex =  /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/;
+  return regex.test(email);
+};
 
 const userSchema = new Schema(
   {
@@ -13,13 +18,15 @@ const userSchema = new Schema(
       trimmed: true,
     },
     email: {
-      type: mongoose.SchemaType.Email,
+      // type: mongoose.SchemaType.Email,
+      type: String,
       trim: true,
-      required: true,
+      required: [true, `Please enter your email`],
       unique: true,
       lowercase: true,
       //TODO: Must match a valid email address (look into Mongoose's matching validation)
       // validate: { validator: isEmail, message: `Invalid email.`},
+      validate: [validateEmail, `Please enter a valid email` ],
     },
     thoughts: [
       {
