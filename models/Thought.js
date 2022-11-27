@@ -1,5 +1,6 @@
 const { Schema, model, default: mongoose } = require("mongoose");
 // const { reactionSchema } = require('./Reaction');
+const { format_date } = require('../utils/format-date');
 
 const reactionSchema = new mongoose.Schema({
   reactionBody: { type: String, required: true, maxlenght: 280 },
@@ -15,10 +16,13 @@ const thoughtSchema = new Schema(
       maxlength: 280,
       minlength: 1,
     },
-    createAt: {
+    createdAt: {
       type: Date,
       default: Date.now,
       //TODO: Use a getter method to format the timestamp on query
+      get: (date) => {
+        return format_date(date);
+      }
     },
     username: {
       type: String,
@@ -29,9 +33,10 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
-  }
+  },
 );
 
 //TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
