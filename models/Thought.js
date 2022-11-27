@@ -1,5 +1,4 @@
 const { Schema, model, default: mongoose } = require("mongoose");
-// const { reactionSchema } = require('./Reaction');
 const { format_date } = require('../utils/format-date');
 
 const reactionSchema = new mongoose.Schema({
