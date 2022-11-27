@@ -4,7 +4,19 @@ const { format_date } = require('../utils/format-date');
 const reactionSchema = new mongoose.Schema({
   reactionBody: { type: String, required: true, maxlenght: 280 },
   username: { type: String, required: true },
-  createAt: { type: Date, default: Date.now },
+  createdAt: { 
+    type: Date, 
+    default: Date.now,
+    get: (date) => {
+      return format_date(date);
+    }
+  },
+},
+{
+  toJSON: {
+    getters: true,
+  },
+  id: false,
 });
 
 const thoughtSchema = new Schema(
