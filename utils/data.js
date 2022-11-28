@@ -104,11 +104,17 @@ const lastName = [
   "Roberts",
 ];
 
+const appThought = [
+  "Here's a cool thought...",
+  "Thoughts are the words of our minds",
+  "This thought is based on my personal opinion...",
+];
+
 const appReactions = [
   "Amazing thought!",
   "I don't agree with you!",
   "Focus on how to be social, not on how to do social.",
-  "Social networks aren’t about Web sites. They’re about experiences.",
+  "Social networks aren\’t about Web sites. They\’re about experiences.",
   "Thank you very much for sharing your experience with us.",
   "We are really happy that your interaction with us!",
   "Glad to hear that this comes in handy!",
@@ -120,6 +126,8 @@ const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const getRandomName = () =>
   `${getRandomArrItem(firstName)} ${getRandomArrItem(lastName)}`;
 
+const getRandomThought = () => `${getRandomArrItem(appThought)}`;
+
 const getRandomReaction = () => `${getRandomArrItem(appReactions)}`;
 
-module.exports = { getRandomName, getRandomReaction };
+module.exports = { getRandomName, getRandomReaction, getRandomThought };

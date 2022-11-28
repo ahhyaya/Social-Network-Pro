@@ -4,7 +4,11 @@ module.exports = {
   // get all thoughts
   getAllThoughts(req, res) {
     Thought.find()
-      .then((thoughts) => res.json(thoughts))
+      .then((thoughts) => {
+        // console.log("thoughts", thoughts)
+        console.log("reaction", thoughts[0].reactions)
+        res.json(thoughts)
+      })
       .catch((err) => res.status(500).json(err));
   },
   // get a single thought by ID
@@ -63,7 +67,8 @@ module.exports = {
     )
       .then((thought) => {
         !thought
-          ? res.status(404).json({ message: `No thought with this ID!` })
+          ? res.status(404)
+            .json({ message: `No thought with this ID!` })
           : res.json(thought);
       })
       .catch((err) => res.status(500).json(err));
