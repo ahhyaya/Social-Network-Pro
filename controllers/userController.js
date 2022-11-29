@@ -45,22 +45,16 @@ module.exports = {
   // delete a single user
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: `No user with this ID!` })
-          : Thought.findOneAndUpdate(
-              { users: req.params.userId },
-              { $pull: { users: req.params.userId } },
-              { new: true }
-            )
-      )
-      .then((thought) => 
-        !thought
-          ? res
-              .status(404)
-              .json({ message: `User deleted, but no thoughts found!` })
-          : res.json({ message: `User successfully deleted!` })
-  )
+      .then((user) => {
+        if(!user) {
+          return res.status(404).json({ message: `No user with this ID!` })
+        }
+        else{
+          Thought.deleteMany(
+              { _id: {$in: user.thoughts } } );
+           res.json({ message: `User successfully deleted!` })
+          }
+        })
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
