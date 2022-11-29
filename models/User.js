@@ -11,6 +11,18 @@ const validateEmail = function(email) {
 
 const userSchema = new Schema(
   {
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Thought",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     username: {
       type: String,
       unique: true,
@@ -27,19 +39,7 @@ const userSchema = new Schema(
       //TODO: Must match a valid email address (look into Mongoose's matching validation)
       // validate: { validator: isEmail, message: `Invalid email.`},
       validate: [validateEmail, `Please enter a valid email` ],
-    },
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Thought",
-      },
-    ],
-    friends: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    }
   },
   {
     toJSON: {
