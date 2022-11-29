@@ -5,7 +5,6 @@ module.exports = {
   getAllThoughts(req, res) {
     Thought.find()
       .then((thoughts) => {
-        // console.log("thoughts", thoughts)
         console.log("reaction", thoughts[0].reactions)
         res.json(thoughts)
       })
@@ -24,14 +23,13 @@ module.exports = {
   // create a new thought
   createNewThought(req, res) {
     Thought.create(req.body)
-      //TODO: push the created thought's _id to the associated user's thoughts array field
+      // push the created thought's _id to the associated user's thoughts array field
       .then((thought) => {
        return User.findOneAndUpdate(
           { _id: req.body.userId },
           { $push: { thoughts: thought._id }},
           { runValidators: true, new: true }
         )
-        // res.json(thought)
       })
       .then((user) => {
         res.json(user)
@@ -65,7 +63,6 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  //TODO: POST to create a reaction stored in a single thought's reactions array field
   // create a new reaction to the thought by thought's ID
   createNewReaction(req, res) {
     console.log(`===== You are adding a reaction =====`);
@@ -83,8 +80,7 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  //TODO: DELETE to pull and remove a reaction by the reaction's reactionId value
-  // remove a reaction 
+  // DELETE to pull and remove a reaction by the reaction's reactionId value
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },

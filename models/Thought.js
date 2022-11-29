@@ -30,7 +30,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      //TODO: Use a getter method to format the timestamp on query
+      // Use a getter method to format the timestamp on query
       get: (date) => {
         return format_date(date);
       }
@@ -50,7 +50,7 @@ const thoughtSchema = new Schema(
   },
 );
 
-//TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+// Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });

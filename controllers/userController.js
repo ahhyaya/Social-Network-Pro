@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require("../models");
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // get a single user
-  // TODO : GET a single user by its _id and populated thought and friend data
+  // GET a single user by its _id and populated thought and friend data
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .then((user) =>
@@ -46,15 +45,14 @@ module.exports = {
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) => {
-        if(!user) {
-          return res.status(404).json({ message: `No user with this ID!` })
+        if (!user) {
+          return res.status(404).json({ message: `No user with this ID!` });
+        } else {
+          // deletes a user's associated thoughts when the user is deleted
+          Thought.deleteMany({ _id: { $in: user.thoughts } });
+          res.json({ message: `User successfully deleted!` });
         }
-        else{
-          Thought.deleteMany(
-              { _id: {$in: user.thoughts } } );
-           res.json({ message: `User successfully deleted!` })
-          }
-        })
+      })
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
@@ -80,7 +78,7 @@ module.exports = {
   removeSingleFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends:req.params.friendId  } },
+      { $pull: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>

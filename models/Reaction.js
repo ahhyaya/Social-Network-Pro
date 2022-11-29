@@ -19,7 +19,7 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      //TODO: Use a getter method to format the timestamp on query
+      // Use a getter method to format the timestamp on query
       get: (date) => {
         return format_date(date);
       }
@@ -33,6 +33,6 @@ const reactionSchema = new Schema(
   }
 );
 
-//TODO: This will not be a model, but rather will be used as the reaction field's subdocument schema in the Thought model.
+// This will not be a model, but rather will be used as the reaction field's subdocument schema in the Thought model.
 
 module.exports = reactionSchema;
