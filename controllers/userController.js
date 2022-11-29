@@ -48,19 +48,19 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: `No user with this ID!` })
-          : Thought.findAllAndDelete(
+          : Thought.findOneAndUpdate(
               { users: req.params.userId },
               { $pull: { users: req.params.userId } },
               { new: true }
             )
       )
-      .then((thoughts) =>
-        !thoughts
+      .then((thought) => 
+        !thought
           ? res
               .status(404)
               .json({ message: `User deleted, but no thoughts found!` })
           : res.json({ message: `User successfully deleted!` })
-      )
+  )
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
@@ -86,7 +86,7 @@ module.exports = {
   removeSingleFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: { friendId: req.params.friendId } } },
+      { $pull: { friends:req.params.friendId  } },
       { runValidators: true, new: true }
     )
       .then((user) =>
